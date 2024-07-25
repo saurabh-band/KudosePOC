@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:Plugin.Maui.SegmentedControl;assembly=Plugin.Maui.SegmentedControl"
+             xmlns:local="clr-namespace:KudosePOC.ViewModels"
+             x:Class="KudosePOC.Kudose">
+
+    <StackLayout BackgroundColor="White">
+
+        <Label Text="Kudos"
+               FontSize="20"
+               HorizontalOptions="Fill"
+               VerticalOptions="Start"
+               HorizontalTextAlignment="Center"
+               Padding="10"
+               FontAttributes="Bold"
+               BackgroundColor="LightGray"/>
+
+         <!--Render your custom ContentView 
+        <local:SegmentedControlView HorizontalOptions="FillAndExpand"
+                                       VerticalOptions="FillAndExpand" />-->
+
+        <VerticalStackLayout x:Name="segContainer" HorizontalOptions="Fill" Padding="10">
+            <controls:SegmentedControl
+                 x:Name="SegControl"
+                 HorizontalOptions="Fill"
+                 VerticalOptions="FillAndExpand"
+                 SelectedTextColor="Blue"
+                 TintColor="LightGray"
+                 ValueChanged="Handle_ValueChanged"
+                 WidthRequest="{OnPlatform Android=350}"
+                 HeightRequest="{OnPlatform Android=30}"
+                 SelectedSegment="0">
+
+                <controls:SegmentedControl.Children>
+                    <controls:SegmentedControlOption Text="Me"/>
+                    <controls:SegmentedControlOption Text="My Team" />
+                    <controls:SegmentedControlOption Text="All" />
+                </controls:SegmentedControl.Children>
+
+            </controls:SegmentedControl>
+        </VerticalStackLayout>
+
+        <CollectionView ItemsSource="{Binding DisplayedKudosList}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame CornerRadius="20"  Padding="10" BackgroundColor="LightGrey" Margin="10">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+
+                            <Image Grid.Column="0"
+                                   Grid.Row="0"
+                                   Source="{Binding ImageURL}" 
+                                   Aspect="AspectFill" 
+                                   HeightRequest="50" 
+                                   WidthRequest="50" 
+                                   Margin="10,0">
+                                <Image.Clip>
+                                    <EllipseGeometry Center="25,25" RadiusX="25" RadiusY="25" />
+                                </Image.Clip>
+                            </Image>
+
+                            <StackLayout Grid.Column="1" Grid.RowSpan="2">
+                                <Label Text="{Binding GiverName}" FontSize="14"/>
+                                <Grid>
+                                    <Label Text="{Binding ReceiverName}" TextColor="Black" FontAttributes="Bold" FontSize="18"/>
+                                    <Label Text="{Binding Date}" FontSize="14" TextColor="Gray" HorizontalOptions="End" />
+                                </Grid>
+                            </StackLayout>
+                        </Grid>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </StackLayout>
+    
+</ContentPage>
